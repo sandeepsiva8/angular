@@ -6,7 +6,7 @@ import { EmployeeService } from '../employee.service';
 @Component({
   selector: 'app-emp-add-edit',
   templateUrl: './emp-add-edit.component.html',
-  styleUrls: ['./emp-add-edit.component.css'],
+  styleUrls: ['./emp-add-edit.component.css']
 })
 export class EmpAddEditComponent implements OnInit {
   empForm: FormGroup;
@@ -16,7 +16,7 @@ export class EmpAddEditComponent implements OnInit {
     'Diploma',
     'Intermediate',
     'Graduate',
-    'Post Graduate',
+    'Post Graduate'
   ];
 
   constructor(
@@ -35,7 +35,7 @@ export class EmpAddEditComponent implements OnInit {
       education: ['', Validators.required],
       company: ['', Validators.required],
       experience: ['', Validators.required],
-      salary: ['', Validators.required],
+      salary: ['', Validators.required]
     });
   }
 
@@ -46,29 +46,27 @@ export class EmpAddEditComponent implements OnInit {
   onSubmit() {
     if (this.empForm.valid) {
       if (this.data) {
-        this.empService
-          .updateEmployee(this.data.id, this.empForm.value)
-          .subscribe({
-            next: (val: any) => {
-              alert('Employee details updated!');
-              this.dialogRef.close(true);
-            },
-            error: (err: any) => {
-              console.error(err);
-              alert('Error while updating the employee!');
-            },
-          });
+        this.empService.updateEmployee(this.data.id, this.empForm.value).subscribe({
+          next: () => {
+            alert('Employee details updated!');
+            this.dialogRef.close(true);
+          },
+          error: (err) => {
+            console.error(err);
+            alert('Error while updating the employee!');
+          }
+        });
       } else {
         this.empService.addEmployee(this.empForm.value).subscribe({
-          next: (val: any) => {
+          next: () => {
             alert('Employee added successfully!');
             this.empForm.reset();
             this.dialogRef.close(true);
           },
-          error: (err: any) => {
+          error: (err) => {
             console.error(err);
             alert('Error while adding the employee!');
-          },
+          }
         });
       }
     }
